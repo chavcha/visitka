@@ -9,7 +9,10 @@ const outputPath = join(root, 'public', 'portrait.png')
 
 const input = readFileSync(inputPath)
 const blob = new Blob([input], { type: 'image/png' })
-const result = await removeBackground(blob)
+const result = await removeBackground(blob, {
+  model: 'medium',
+  output: { format: 'image/png', quality: 1 },
+})
 const buffer = Buffer.from(await result.arrayBuffer())
 writeFileSync(outputPath, buffer)
 console.log(`Saved ${outputPath} (${buffer.length} bytes)`)

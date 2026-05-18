@@ -111,9 +111,19 @@ function App() {
             <div className="hero__grid" />
           </div>
 
+          <div className="hero__portrait-column">
+            <img
+              className="hero__portrait"
+              src={`${import.meta.env.BASE_URL}portrait.png`}
+              alt="Владимир Сидоров"
+              width={560}
+              height={900}
+              decoding="async"
+            />
+          </div>
+
           <div className="hero__content container">
-            <div className="hero__layout">
-              <div className="hero__copy">
+            <div className="hero__copy">
                 <p className="hero__label">Software Developer</p>
                 <h1 id="hero-title" className="hero__title">
                   <span className="hero__line">Владимир</span>
@@ -150,17 +160,6 @@ function App() {
                     GitHub
                   </a>
                 </div>
-              </div>
-              <div className="hero__portrait-wrap">
-                <img
-                  className="hero__portrait"
-                  src={`${import.meta.env.BASE_URL}portrait.png`}
-                  alt="Владимир Сидоров"
-                  width={480}
-                  height={640}
-                  decoding="async"
-                />
-              </div>
             </div>
           </div>
 
