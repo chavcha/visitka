@@ -112,41 +112,55 @@ function App() {
           </div>
 
           <div className="hero__content container">
-            <p className="hero__label">Software Developer</p>
-            <h1 id="hero-title" className="hero__title">
-              <span className="hero__line">Владимир</span>
-              <span className="hero__line hero__line--accent">Сидоров</span>
-            </h1>
-            <p className="hero__tagline">
-              Создаю интерфейсы и продукты на фронтенде — от вёрстки и Vue до
-              React и React Native. Чистый код, измеримый результат.
-            </p>
-            <div className="hero__stats">
-              <div className="stat">
-                <span className="stat__value">2+</span>
-                <span className="stat__label">года в разработке</span>
+            <div className="hero__layout">
+              <div className="hero__copy">
+                <p className="hero__label">Software Developer</p>
+                <h1 id="hero-title" className="hero__title">
+                  <span className="hero__line">Владимир</span>
+                  <span className="hero__line hero__line--accent">Сидоров</span>
+                </h1>
+                <p className="hero__tagline">
+                  Создаю интерфейсы и продукты на фронтенде — от вёрстки и Vue
+                  до React и React Native. Чистый код, измеримый результат.
+                </p>
+                <div className="hero__stats">
+                  <div className="stat">
+                    <span className="stat__value">2+</span>
+                    <span className="stat__label">года в разработке</span>
+                  </div>
+                  <div className="stat">
+                    <span className="stat__value">20+</span>
+                    <span className="stat__label">технологий в стеке</span>
+                  </div>
+                  <div className="stat">
+                    <span className="stat__value">КубГТУ</span>
+                    <span className="stat__label">бакалавр ПИ, 2025</span>
+                  </div>
+                </div>
+                <div className="hero__actions">
+                  <a className="btn btn--fill" href="#contact">
+                    Обсудить проект
+                  </a>
+                  <a
+                    className="btn btn--outline"
+                    href="https://github.com/chavcha"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    GitHub
+                  </a>
+                </div>
               </div>
-              <div className="stat">
-                <span className="stat__value">20+</span>
-                <span className="stat__label">технологий в стеке</span>
+              <div className="hero__portrait-wrap">
+                <img
+                  className="hero__portrait"
+                  src={`${import.meta.env.BASE_URL}portrait.png`}
+                  alt="Владимир Сидоров"
+                  width={480}
+                  height={640}
+                  decoding="async"
+                />
               </div>
-              <div className="stat">
-                <span className="stat__value">КубГТУ</span>
-                <span className="stat__label">бакалавр ПИ, 2025</span>
-              </div>
-            </div>
-            <div className="hero__actions">
-              <a className="btn btn--fill" href="#contact">
-                Обсудить проект
-              </a>
-              <a
-                className="btn btn--outline"
-                href="https://github.com/chavcha"
-                target="_blank"
-                rel="noreferrer"
-              >
-                GitHub
-              </a>
             </div>
           </div>
 
@@ -218,11 +232,6 @@ function App() {
                             <h3 className="timeline__title">{job.title}</h3>
                             <p className="timeline__org">{job.org}</p>
                           </div>
-                          <p className="timeline__meta">
-                            {job.period}
-                            <span aria-hidden="true"> · </span>
-                            {job.duration}
-                          </p>
                         </header>
                         <ul className="timeline__list">
                           {job.highlights.map((item) => (

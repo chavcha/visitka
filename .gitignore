@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+public/portrait-source.png
+.venv
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
