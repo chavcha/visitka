@@ -44,9 +44,11 @@ const EXPERIENCE = [
     period: 'фев. 2024 — авг. 2025',
     duration: '1 год 6 месяцев',
     highlights: [
-      'HTML, CSS: вёрстка шаблонов и макетов.',
-      'C#, Razor Pages — диплом «Социальная сеть».',
-      'Vue.js.',
+      'Вёрстка по макетам Figma: семантический HTML, адаптив, CSS Grid и Flexbox — интерфейс одинаково уверенно смотрится на десктопе и мобильных.',
+      'Живые шаблоны и UI-киты для заказчиков: аккуратная типографика, состояния кнопок и форм, внимание к деталям, которые замечает пользователь.',
+      'Диплом «Социальная сеть» на C# и Razor Pages: регистрация, профили, лента и взаимодействия — fullstack-логика с серверным рендерингом и чистой структурой MVC.',
+      'SPA на Vue.js: компоненты, Vue Router, работа с REST API и управление состоянием — от прототипа до рабочего интерфейса без лишней сложности.',
+      'Фриланс-формат: согласование ТЗ, прозрачные сроки, промежуточные показы и доработки — чтобы результат совпадал с ожиданиями бизнеса.',
     ],
   },
 ] as const
@@ -110,7 +112,7 @@ function App() {
           </div>
 
           <div className="hero__content container">
-            <p className="hero__label">Software Developer · Краснодар</p>
+            <p className="hero__label">Software Developer</p>
             <h1 id="hero-title" className="hero__title">
               <span className="hero__line">Владимир</span>
               <span className="hero__line hero__line--accent">Сидоров</span>
@@ -320,7 +322,7 @@ function App() {
                 </li>
                 <li>
                   <span className="contact__label">Город</span>
-                  <span>Краснодар, Россия</span>
+                  <span>Анапа, Россия</span>
                 </li>
                 <li>
                   <span className="contact__label">GitHub</span>
