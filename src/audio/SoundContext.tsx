@@ -6,7 +6,13 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { playClickSound, playHoverSound, unlockHoverAudio } from './hoverSound'
+import {
+  playClickSound,
+  playHoverSound,
+  playTerminalSound,
+  unlockHoverAudio,
+  type TerminalSound,
+} from './hoverSound'
 
 const STORAGE_KEY = 'visitka-sound'
 
@@ -27,6 +33,7 @@ type SoundContextValue = {
   toggleEnabled: () => void
   playHover: () => void
   playClick: () => void
+  playTerminal: (variant: TerminalSound) => void
   soundSelector: string
 }
 
@@ -82,6 +89,14 @@ export function SoundProvider({ children }: { children: ReactNode }) {
     playClickSound()
   }, [enabled])
 
+  const playTerminal = useCallback(
+    (variant: TerminalSound) => {
+      if (!enabled) return
+      playTerminalSound(variant)
+    },
+    [enabled],
+  )
+
   const value = useMemo(
     () => ({
       enabled,
@@ -89,9 +104,10 @@ export function SoundProvider({ children }: { children: ReactNode }) {
       toggleEnabled,
       playHover,
       playClick,
+      playTerminal,
       soundSelector: UI_SOUND_SELECTOR,
     }),
-    [enabled, setEnabled, toggleEnabled, playHover, playClick],
+    [enabled, setEnabled, toggleEnabled, playHover, playClick, playTerminal],
   )
 
   return (

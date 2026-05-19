@@ -5,7 +5,9 @@ import {
   useState,
   type KeyboardEvent,
 } from 'react'
+import { useSound } from '../audio/SoundContext'
 import { useLocale } from '../i18n/LocaleContext'
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
 
 const SKILL_NAMES = [
   'React',
@@ -42,6 +44,8 @@ function nextLine(kind: LineKind, text: string): TerminalLine {
 
 export function CodeTerminal() {
   const { t } = useLocale()
+  const { playTerminal } = useSound()
+  const reducedMotion = usePrefersReducedMotion()
   const [lines, setLines] = useState<TerminalLine[]>([])
   const [input, setInput] = useState('')
   const bodyRef = useRef<HTMLDivElement>(null)
@@ -129,6 +133,14 @@ export function CodeTerminal() {
   )
 
   const onInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (!reducedMotion) {
+      if (e.key === 'Enter') playTerminal('enter')
+      else if (e.key === 'Backspace') playTerminal('backspace')
+      else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        playTerminal('key')
+      }
+    }
+
     if (e.key !== 'Enter') return
     e.preventDefault()
     e.stopPropagation()
