@@ -27,7 +27,6 @@ const EXPERIENCE = [
   {
     index: '01',
     title: 'SEO-специалист',
-    org: 'Фриланс',
     period: 'авг. 2025 — окт. 2025',
     duration: '3 месяца',
     highlights: [
@@ -40,7 +39,6 @@ const EXPERIENCE = [
   {
     index: '02',
     title: 'Frontend-разработчик',
-    org: 'Фриланс',
     period: 'фев. 2024 — авг. 2025',
     duration: '1 год 6 месяцев',
     highlights: [
@@ -219,7 +217,6 @@ function App() {
                         <header className="timeline__head">
                           <div>
                             <h3 className="timeline__title">{job.title}</h3>
-                            <p className="timeline__org">{job.org}</p>
                           </div>
                         </header>
                         <ul className="timeline__list">
@@ -240,8 +237,8 @@ function App() {
                 <h3 className="edu-card__title">
                   Кубанский государственный технологический университет
                 </h3>
-                <p className="edu-card__meta">2021 — 2025 · Бакалавр 09.03.04</p>
-                <p className="edu-card__text">Программная инженерия</p>
+                <p className="edu-card__meta">2021 — 2025 · Бакалавр</p>
+                <p className="edu-card__text">Программная инженерия · 09.03.04</p>
               </article>
             </Reveal>
           </div>
@@ -287,7 +284,7 @@ function App() {
                 target="_blank"
                 rel="noreferrer"
               >
-                github.com/chavcha →
+                GitHub
               </a>
             </Reveal>
           </div>
@@ -300,7 +297,7 @@ function App() {
               <h2 id="contact-title" className="contact__title">
                 Давайте
                 <br />
-                <span className="text-gradient">познакомимся</span>
+                <span className="text-gradient">сотрудничать</span>
               </h2>
             </Reveal>
             <Reveal delay={80}>
@@ -341,7 +338,7 @@ function App() {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    github.com/chavcha
+                    GitHub
                   </a>
                 </li>
               </ul>
