@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import { CountUp } from './components/CountUp'
 import { CursorSpotlight } from './components/CursorSpotlight'
+import { MagneticLink } from './components/MagneticLink'
 import { Reveal } from './components/Reveal'
 import { ScrollProgress } from './components/ScrollProgress'
 import { SkillCard } from './components/SkillCard'
@@ -35,36 +36,32 @@ const PHONES = ['+7 (918) 488-34-24', '+7 (991) 537-82-82'] as const
 const EXPERIENCE = [
   {
     index: '01',
-    title: 'SEO-специалист',
-    period: 'авг. 2025 — окт. 2025',
-    duration: '3 месяца',
+    title: 'SEO Specialist',
     highlights: [
-      'Продвижение, аналитика и оптимизация.',
-      'Яндекс.Вебмастер, Google Search Console, Яндекс.Метрика.',
-      'СПА и производство мебели: анализ и продвижение.',
-      'Смягчение последствий атак с подставными доменами.',
+      'Promotion, analytics, and optimization.',
+      'Yandex Webmaster, Google Search Console, Yandex Metrica.',
+      'Spa and furniture manufacturing: analysis and growth.',
+      'Mitigating impact of attacks using lookalike domains.',
     ],
   },
   {
     index: '02',
-    title: 'Frontend-разработчик',
-    period: 'фев. 2024 — авг. 2025',
-    duration: '1 год 6 месяцев',
+    title: 'Frontend Developer',
     highlights: [
-      'Вёрстка по макетам Figma: семантический HTML, адаптив, CSS Grid и Flexbox — интерфейс одинаково уверенно смотрится на десктопе и мобильных.',
-      'Живые шаблоны и UI-киты для заказчиков: аккуратная типографика, состояния кнопок и форм, внимание к деталям, которые замечает пользователь.',
-      'Диплом «Социальная сеть» на C# и Razor Pages: регистрация, профили, лента и взаимодействия — fullstack-логика с серверным рендерингом и чистой структурой MVC.',
-      'SPA на Vue.js: компоненты, Vue Router, работа с REST API и управление состоянием — от прототипа до рабочего интерфейса без лишней сложности.',
-      'Фриланс-формат: согласование ТЗ, прозрачные сроки, промежуточные показы и доработки — чтобы результат совпадал с ожиданиями бизнеса.',
+      'Figma-to-code: semantic HTML, responsive layouts, CSS Grid and Flexbox — interfaces that work on desktop and mobile.',
+      'Live templates and UI kits for clients: typography, button and form states, attention to details users notice.',
+      'Graduation project “Social Network” in C# and Razor Pages: registration, profiles, feed, and interactions — fullstack logic with server rendering and clean MVC structure.',
+      'Vue.js SPA: components, Vue Router, REST API integration, and state management — from prototype to production UI without unnecessary complexity.',
+      'Independent delivery: scope alignment, clear timelines, progress demos, and iterations so outcomes match business expectations.',
     ],
   },
 ] as const
 
 const NAV = [
-  { href: '#about', label: 'Обо мне' },
-  { href: '#experience', label: 'Опыт' },
-  { href: '#skills', label: 'Навыки' },
-  { href: '#contact', label: 'Контакты' },
+  { href: '#about', label: 'About' },
+  { href: '#experience', label: 'Experience' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#contact', label: 'Contact' },
 ] as const
 
 const TICKER_TEXT =
@@ -102,7 +99,7 @@ function App() {
       <ScrollProgress />
       <CursorSpotlight />
       <a href="#main" className="skip">
-        К основному содержимому
+        Skip to main content
       </a>
 
       <header className={`header ${scrolled ? 'header--scrolled' : ''}`}>
@@ -110,7 +107,7 @@ function App() {
           <a className="header__logo" href="#top">
             VS
           </a>
-          <nav className="header__nav" aria-label="Разделы">
+          <nav className="header__nav" aria-label="Sections">
             {NAV.map((item) => {
               const id = item.href.slice(1)
               return (
@@ -124,9 +121,9 @@ function App() {
               )
             })}
           </nav>
-          <a className="header__cta" href="#contact">
-            Связаться
-          </a>
+          <MagneticLink className="header__cta btn-magnetic" href="#contact">
+            Get in touch
+          </MagneticLink>
         </div>
       </header>
 
@@ -140,50 +137,51 @@ function App() {
             <div className="hero__orb hero__orb--1" />
             <div className="hero__orb hero__orb--2" />
             <div className="hero__grid" />
+            <div className="hero__beam" />
           </div>
 
           <div className="hero__content container">
             <div className="hero__copy">
-                <p className="hero__label">Software Developer</p>
-                <h1 id="hero-title" className="hero__title">
-                  <span className="hero__line">Владимир</span>
-                  <span className="hero__line hero__line--accent">Сидоров</span>
-                </h1>
-                <p className="hero__tagline">
-                  Создаю интерфейсы и продукты на фронтенде — от вёрстки и Vue
-                  до React и React Native. Чистый код, измеримый результат.
-                </p>
-                <div className="hero__stats">
-                  <div className="stat">
-                    <CountUp value={1} suffix="+" />
-                    <span className="stat__label">года в разработке</span>
-                  </div>
-                  <div className="stat">
-                    <CountUp value={20} suffix="+" />
-                    <span className="stat__label">технологий в стеке</span>
-                  </div>
-                  <div className="stat">
-                    <span className="stat__value">КубГТУ</span>
-                    <span className="stat__label">бакалавр ПИ, 2025</span>
-                  </div>
+              <p className="hero__label">Software Developer</p>
+              <h1 id="hero-title" className="hero__title">
+                <span className="hero__line">Vladimir</span>
+                <span className="hero__line hero__line--accent">Sidorov</span>
+              </h1>
+              <p className="hero__tagline">
+                I build frontend interfaces and products — from layout and Vue
+                to React and React Native. Clean code, measurable outcomes.
+              </p>
+              <div className="hero__stats">
+                <div className="stat">
+                  <CountUp value={1} suffix="+" />
+                  <span className="stat__label">year in development</span>
                 </div>
-                <div className="hero__actions">
-                  <a className="btn btn--fill" href="#contact">
-                    Обсудить проект
-                  </a>
-                  <a
-                    className="btn btn--outline"
-                    href="https://github.com/chavcha"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    GitHub
-                  </a>
+                <div className="stat">
+                  <CountUp value={20} suffix="+" />
+                  <span className="stat__label">technologies in stack</span>
                 </div>
+                <div className="stat">
+                  <span className="stat__value">KubSTU</span>
+                  <span className="stat__label">BSc Software Eng., 2025</span>
+                </div>
+              </div>
+              <div className="hero__actions">
+                <MagneticLink className="btn btn--fill btn-magnetic" href="#contact">
+                  Discuss a project
+                </MagneticLink>
+                <MagneticLink
+                  className="btn btn--outline btn-magnetic"
+                  href="https://github.com/chavcha"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  GitHub
+                </MagneticLink>
+              </div>
             </div>
           </div>
 
-          <a href="#about" className="hero__scroll" aria-label="Прокрутить вниз">
+          <a href="#about" className="hero__scroll" aria-label="Scroll down">
             <span className="hero__scroll-line" />
           </a>
         </section>
@@ -198,30 +196,30 @@ function App() {
           </div>
         </div>
 
-        <section id="about" className="panel" aria-labelledby="about-title">
+        <section id="about" className="panel panel--motion" aria-labelledby="about-title">
           <div className="container panel__grid">
-            <Reveal>
-              <p className="panel__eyebrow">01 — Обо мне</p>
+            <Reveal variant="blur">
+              <p className="panel__eyebrow">01 — About</p>
               <h2 id="about-title" className="panel__heading">
-                Разработчик,
+                A developer
                 <br />
-                ориентированный
+                focused on
                 <br />
-                <span className="text-gradient">на результат</span>
+                <span className="text-gradient">outcomes</span>
               </h2>
             </Reveal>
-            <Reveal delay={120} className="panel__body">
+            <Reveal delay={120} className="panel__body" variant="blur">
               <p>
-                Один год в разработке ПО с фокусом на фронтенд: HTML и CSS,
-                JavaScript, TypeScript, React и Vue, React Native, Redux,
-                Vite, Node.js, GraphQL и смежный стек (Effector, FSD, C# /
-                .NET). Увлекаюсь качественными интерфейсами и продуктовой
-                логикой, комфортно работаю в кросс-функциональных командах.
+                One year in software development with a frontend focus: HTML and
+                CSS, JavaScript, TypeScript, React and Vue, React Native, Redux,
+                Vite, Node.js, GraphQL, and related tools (Effector, FSD, C# /
+                .NET). I care about polished interfaces and product logic, and I
+                work well in cross-functional teams.
               </p>
               <p>
-                Пишу поддерживаемый, документируемый код, провожу code review.
-                Параллельно — опыт в SEO и веб-аналитике. Ищу команду, где
-                фронтенд — полноценная инженерная дисциплина.
+                I write maintainable, documented code and do code reviews. I
+                also have experience in SEO and web analytics. I am looking for a
+                team where frontend is a full engineering discipline.
               </p>
             </Reveal>
           </div>
@@ -229,14 +227,14 @@ function App() {
 
         <section
           id="experience"
-          className="panel panel--alt"
+          className="panel panel--alt panel--motion"
           aria-labelledby="experience-title"
         >
           <div className="container">
-            <Reveal>
-              <p className="panel__eyebrow">02 — Опыт</p>
+            <Reveal variant="blur">
+              <p className="panel__eyebrow">02 — Experience</p>
               <h2 id="experience-title" className="panel__heading panel__heading--sm">
-                Ключевые достижения
+                Key achievements
               </h2>
             </Reveal>
 
@@ -266,8 +264,17 @@ function App() {
                           </div>
                         </header>
                         <ul className="timeline__list">
-                          {job.highlights.map((item) => (
-                            <li key={item}>{item}</li>
+                          {job.highlights.map((item, j) => (
+                            <li
+                              key={item}
+                              style={
+                                {
+                                  '--item-delay': `${j * 60}ms`,
+                                } as CSSProperties
+                              }
+                            >
+                              {item}
+                            </li>
                           ))}
                         </ul>
                       </div>
@@ -277,25 +284,25 @@ function App() {
               ))}
             </ol>
 
-            <Reveal delay={100}>
+            <Reveal delay={100} variant="blur">
               <article className="edu-card">
-                <p className="panel__eyebrow">Образование</p>
+                <p className="panel__eyebrow">Education</p>
                 <h3 className="edu-card__title">
-                  Кубанский государственный технологический университет
+                  Kuban State Technological University
                 </h3>
-                <p className="edu-card__meta">2021 — 2025 · Бакалавр</p>
-                <p className="edu-card__text">Программная инженерия · 09.03.04</p>
+                <p className="edu-card__meta">2021 — 2025 · Bachelor&apos;s</p>
+                <p className="edu-card__text">Software Engineering · 09.03.04</p>
               </article>
             </Reveal>
           </div>
         </section>
 
-        <section id="skills" className="panel" aria-labelledby="skills-title">
+        <section id="skills" className="panel panel--motion" aria-labelledby="skills-title">
           <div className="container">
-            <Reveal>
-              <p className="panel__eyebrow">03 — Стек</p>
+            <Reveal variant="blur">
+              <p className="panel__eyebrow">03 — Stack</p>
               <h2 id="skills-title" className="panel__heading panel__heading--sm">
-                Инструменты и технологии
+                Tools &amp; technologies
               </h2>
             </Reveal>
             <ul className="bento" role="list">
@@ -312,37 +319,41 @@ function App() {
           </div>
         </section>
 
-        <section className="cta-band" aria-labelledby="code-title">
+        <section className="cta-band panel--motion" aria-labelledby="code-title">
           <div className="container cta-band__inner">
-            <Reveal>
-              <p className="panel__eyebrow">Код</p>
+            <Reveal variant="blur">
+              <p className="panel__eyebrow">Code</p>
               <h2 id="code-title" className="cta-band__title">
-                Смотрите репозитории
+                Browse repositories
               </h2>
               <p className="cta-band__text">
-                GitHub дополняет резюме: структура проектов, стиль кода и подход
-                к задачам.
+                GitHub complements the resume: project structure, code style, and
+                how I approach problems.
               </p>
-              <a
-                className="btn btn--fill btn--lg"
+              <MagneticLink
+                className="btn btn--fill btn--lg btn-magnetic"
                 href="https://github.com/chavcha"
                 target="_blank"
                 rel="noreferrer"
               >
                 GitHub
-              </a>
+              </MagneticLink>
             </Reveal>
           </div>
         </section>
 
-        <section id="contact" className="panel panel--contact" aria-labelledby="contact-title">
+        <section
+          id="contact"
+          className="panel panel--contact panel--motion"
+          aria-labelledby="contact-title"
+        >
           <div className="container contact">
-            <Reveal>
-              <p className="panel__eyebrow">04 — Контакты</p>
+            <Reveal variant="blur">
+              <p className="panel__eyebrow">04 — Contact</p>
               <h2 id="contact-title" className="contact__title">
-                Давайте
+                Let&apos;s
                 <br />
-                <span className="text-gradient">сотрудничать</span>
+                <span className="text-gradient">collaborate</span>
               </h2>
             </Reveal>
             <Reveal delay={80}>
@@ -353,7 +364,7 @@ function App() {
             <Reveal delay={120}>
               <ul className="contact__grid">
                 <li>
-                  <span className="contact__label">Телефон</span>
+                  <span className="contact__label">Phone</span>
                   {PHONES.map((p) => (
                     <a key={p} href={phoneHref(p)} className="contact__link">
                       {p}
@@ -361,8 +372,8 @@ function App() {
                   ))}
                 </li>
                 <li>
-                  <span className="contact__label">Город</span>
-                  <span>Анапа, Россия</span>
+                  <span className="contact__label">Location</span>
+                  <span>Anapa, Russia</span>
                 </li>
                 <li>
                   <span className="contact__label">Telegram</span>
@@ -391,12 +402,12 @@ function App() {
           </div>
         </section>
 
-        <section className="panel panel--soft" aria-labelledby="extra-title">
+        <section className="panel panel--soft panel--motion" aria-labelledby="extra-title">
           <div className="container">
             <Reveal>
-              <p className="panel__eyebrow">Вне работы</p>
+              <p className="panel__eyebrow">Beyond work</p>
               <p id="extra-title" className="panel__muted">
-                Единоборства · Фильмы и сериалы · Музыка · Игры
+                Martial arts · Movies &amp; TV · Music · Games
               </p>
             </Reveal>
           </div>
@@ -405,7 +416,7 @@ function App() {
 
       <footer className="footer">
         <div className="container footer__inner">
-          <span>© {new Date().getFullYear()} Владимир Сидоров</span>
+          <span>© {new Date().getFullYear()} Vladimir Sidorov</span>
           <a href="mailto:waldemar.vs@yandex.ru">waldemar.vs@yandex.ru</a>
         </div>
       </footer>

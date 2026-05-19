@@ -86,10 +86,27 @@ a:focus-visible {
   transform: translateY(0);
 }
 
+.reveal--blur {
+  filter: blur(8px);
+}
+
+.reveal--blur.reveal--visible {
+  filter: blur(0);
+  transition:
+    opacity 0.9s var(--ease-out),
+    transform 0.9s var(--ease-out),
+    filter 1s var(--ease-out);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal {
     opacity: 1;
     transform: none;
     transition: none;
+    filter: none;
+  }
+
+  .reveal--blur {
+    filter: none;
   }
 }

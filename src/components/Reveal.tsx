@@ -4,9 +4,15 @@ type RevealProps = {
   children: ReactNode
   className?: string
   delay?: number
+  variant?: 'default' | 'blur'
 }
 
-export function Reveal({ children, className = '', delay = 0 }: RevealProps) {
+export function Reveal({
+  children,
+  className = '',
+  delay = 0,
+  variant = 'default',
+}: RevealProps) {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -36,7 +42,7 @@ export function Reveal({ children, className = '', delay = 0 }: RevealProps) {
   return (
     <div
       ref={ref}
-      className={`reveal ${className}`.trim()}
+      className={`reveal reveal--${variant} ${className}`.trim()}
       style={{ '--reveal-delay': `${delay}ms` } as CSSProperties}
     >
       {children}
