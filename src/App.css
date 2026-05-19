@@ -404,6 +404,7 @@
 }
 
 .hero--ready .hero__label,
+.hero--ready .hero__rotator,
 .hero--ready .hero__tagline,
 .hero--ready .hero__stats,
 .hero--ready .hero__actions {
@@ -414,16 +415,20 @@
   animation-delay: 0.2s;
 }
 
+.hero--ready .hero__rotator {
+  animation-delay: 0.24s;
+}
+
 .hero--ready .hero__tagline {
-  animation-delay: 0.28s;
+  animation-delay: 0.3s;
 }
 
 .hero--ready .hero__stats {
-  animation-delay: 0.36s;
+  animation-delay: 0.38s;
 }
 
 .hero--ready .hero__actions {
-  animation-delay: 0.44s;
+  animation-delay: 0.46s;
 }
 
 @keyframes hero-line-in {
@@ -475,12 +480,45 @@
 }
 
 .hero__label {
-  margin: 0 0 20px;
+  margin: 0 0 12px;
   font-size: 0.82rem;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-muted);
+}
+
+.hero__rotator {
+  margin: 0 0 16px;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 4.5vw, 1.85rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  min-height: 1.25em;
+}
+
+.hero__rotator-word {
+  display: inline;
+}
+
+.hero__rotator-cursor {
+  display: inline-block;
+  margin-left: 1px;
+  font-weight: 300;
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity 0.1s linear;
+}
+
+.hero__rotator-cursor.is-visible {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__rotator-cursor {
+    display: none;
+  }
 }
 
 .hero__title {
@@ -681,6 +719,7 @@
 
   .hero--ready .hero__line,
   .hero--ready .hero__label,
+  .hero--ready .hero__rotator,
   .hero--ready .hero__tagline,
   .hero--ready .hero__stats,
   .hero--ready .hero__actions {

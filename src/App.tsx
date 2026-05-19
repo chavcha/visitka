@@ -23,6 +23,7 @@ import { MagneticLink } from './components/MagneticLink'
 import { listenForHireMeSecret, logConsoleEasterEgg } from './features/easterEgg'
 import { Reveal } from './components/Reveal'
 import { ScrollProgress } from './components/ScrollProgress'
+import { TypingRotator } from './components/TypingRotator'
 import { SkillCard } from './components/SkillCard'
 import { useLocale } from './i18n/LocaleContext'
 import { usePointerParallax } from './hooks/usePointerParallax'
@@ -171,6 +172,7 @@ function App() {
           <div className="hero__content container">
             <div className="hero__copy">
               <p className="hero__label">{t.hero.label}</p>
+              <TypingRotator />
               <h1 id="hero-title" className="hero__title">
                 <span className="hero__line">{t.hero.firstName}</span>
                 <span className="hero__line hero__line--accent">
