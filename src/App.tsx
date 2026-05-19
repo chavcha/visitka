@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState, type CSSProperties } from 'react'
 import { CountUp } from './components/CountUp'
 import { CursorSpotlight } from './components/CursorSpotlight'
 import { CodeTerminal } from './components/CodeTerminal'
+import { HeroScene } from './components/HeroScene'
 import { HireMeToast } from './components/HireMeToast'
 import { LocaleToggle } from './components/LocaleToggle'
 import { ThemeToggle } from './components/ThemeToggle'
@@ -132,6 +133,7 @@ function App() {
           aria-labelledby="hero-title"
         >
           <div className="hero__bg" aria-hidden="true">
+            <HeroScene ready={ready} />
             <div className="hero__orb hero__orb--1" />
             <div className="hero__orb hero__orb--2" />
             <div className="hero__grid" />
