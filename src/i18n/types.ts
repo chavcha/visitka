@@ -68,6 +68,7 @@ export type Copy = {
   skills: {
     eyebrow: string
     title: string
+    portfolioLabel: string
   }
   code: {
     eyebrow: string
@@ -81,6 +82,7 @@ export type Copy = {
     helpTitle: string
     helpLines: string[]
     skillsTitle: string
+    portfolioStackTitle: string
     contactTitle: string
     contactEmail: string
     contactTelegram: string

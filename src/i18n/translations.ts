@@ -84,6 +84,7 @@ const en: Copy = {
   skills: {
     eyebrow: '03 — Stack',
     title: 'Tools & technologies',
+    portfolioLabel: 'This site — visitka',
   },
   code: {
     eyebrow: 'Code',
@@ -103,6 +104,7 @@ const en: Copy = {
       '  clear    — clear the screen',
     ],
     skillsTitle: 'Stack:',
+    portfolioStackTitle: 'This site (visitka):',
     contactTitle: 'Contact:',
     contactEmail: '  email:    waldemar.vs@yandex.ru',
     contactTelegram: '  telegram: @camefromwayabove',
@@ -217,6 +219,7 @@ const ru: Copy = {
   skills: {
     eyebrow: '03 — Стек',
     title: 'Инструменты и технологии',
+    portfolioLabel: 'Этот сайт — visitka',
   },
   code: {
     eyebrow: 'Код',
@@ -236,6 +239,7 @@ const ru: Copy = {
       '  clear    — очистить экран',
     ],
     skillsTitle: 'Стек:',
+    portfolioStackTitle: 'Этот сайт (visitka):',
     contactTitle: 'Контакты:',
     contactEmail: '  email:    waldemar.vs@yandex.ru',
     contactTelegram: '  telegram: @camefromwayabove',
