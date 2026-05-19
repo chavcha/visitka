@@ -1,6 +1,15 @@
 import { useEffect, useState } from 'react'
+import { CountUp } from './components/CountUp'
+import { CursorSpotlight } from './components/CursorSpotlight'
 import { Reveal } from './components/Reveal'
+import { ScrollProgress } from './components/ScrollProgress'
+import { SkillCard } from './components/SkillCard'
+import { usePointerParallax } from './hooks/usePointerParallax'
+import { usePrefersReducedMotion } from './hooks/usePrefersReducedMotion'
+import { useScrollSpy } from './hooks/useScrollSpy'
 import './App.css'
+
+const SPY_SECTIONS = ['about', 'experience', 'skills', 'contact'] as const
 
 const SKILLS = [
   { name: 'React', size: 'lg' as const },
@@ -69,6 +78,12 @@ function phoneHref(display: string) {
 
 function App() {
   const [scrolled, setScrolled] = useState(false)
+  const [ready, setReady] = useState(false)
+  const [activeJob, setActiveJob] = useState<string>(EXPERIENCE[0].index)
+  const reducedMotion = usePrefersReducedMotion()
+  const activeSection = useScrollSpy(SPY_SECTIONS)
+
+  usePointerParallax(!reducedMotion)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 48)
@@ -77,8 +92,15 @@ function App() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setReady(true))
+    return () => cancelAnimationFrame(id)
+  }, [])
+
   return (
-    <div className="page">
+    <div className={`page${ready ? ' page--ready' : ''}`}>
+      <ScrollProgress />
+      <CursorSpotlight />
       <a href="#main" className="skip">
         К основному содержимому
       </a>
@@ -89,11 +111,18 @@ function App() {
             VS
           </a>
           <nav className="header__nav" aria-label="Разделы">
-            {NAV.map((item) => (
-              <a key={item.href} href={item.href}>
-                {item.label}
-              </a>
-            ))}
+            {NAV.map((item) => {
+              const id = item.href.slice(1)
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className={activeSection === id ? 'is-active' : undefined}
+                >
+                  {item.label}
+                </a>
+              )
+            })}
           </nav>
           <a className="header__cta" href="#contact">
             Связаться
@@ -102,7 +131,11 @@ function App() {
       </header>
 
       <main id="main">
-        <section id="top" className="hero" aria-labelledby="hero-title">
+        <section
+          id="top"
+          className={`hero${ready ? ' hero--ready' : ''}`}
+          aria-labelledby="hero-title"
+        >
           <div className="hero__bg" aria-hidden="true">
             <div className="hero__orb hero__orb--1" />
             <div className="hero__orb hero__orb--2" />
@@ -122,11 +155,11 @@ function App() {
                 </p>
                 <div className="hero__stats">
                   <div className="stat">
-                    <span className="stat__value">1+</span>
+                    <CountUp value={1} suffix="+" />
                     <span className="stat__label">года в разработке</span>
                   </div>
                   <div className="stat">
-                    <span className="stat__value">20+</span>
+                    <CountUp value={20} suffix="+" />
                     <span className="stat__label">технологий в стеке</span>
                   </div>
                   <div className="stat">
@@ -155,7 +188,7 @@ function App() {
           </a>
         </section>
 
-        <div className="ticker" aria-hidden="true">
+        <div className="ticker ticker--interactive" aria-hidden="true">
           <div className="ticker__track">
             {[...Array(2)].map((_, i) => (
               <span key={i} className="ticker__group">
@@ -211,7 +244,20 @@ function App() {
               {EXPERIENCE.map((job, i) => (
                 <li key={job.index}>
                   <Reveal delay={i * 80}>
-                    <article className="timeline__card">
+                    <article
+                      className={`timeline__card${
+                        activeJob === job.index ? ' timeline__card--active' : ''
+                      }`}
+                      onClick={() => setActiveJob(job.index)}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault()
+                          setActiveJob(job.index)
+                        }
+                      }}
+                    >
                       <span className="timeline__index">{job.index}</span>
                       <div className="timeline__main">
                         <header className="timeline__head">
@@ -255,12 +301,11 @@ function App() {
             <ul className="bento" role="list">
               {SKILLS.map((skill, i) => (
                 <li key={skill.name}>
-                  <Reveal
+                  <SkillCard
+                    name={skill.name}
+                    size={skill.size}
                     delay={(i % 6) * 40}
-                    className={`bento__item bento__item--${skill.size}`}
-                  >
-                    <span>{skill.name}</span>
-                  </Reveal>
+                  />
                 </li>
               ))}
             </ul>
