@@ -338,7 +338,7 @@ function App() {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    GitHub
+                    chavcha
                   </a>
                 </li>
               </ul>
