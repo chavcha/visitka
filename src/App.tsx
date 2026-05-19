@@ -365,11 +365,13 @@ function App() {
               <ul className="contact__grid">
                 <li>
                   <span className="contact__label">Phone</span>
-                  {PHONES.map((p) => (
-                    <a key={p} href={phoneHref(p)} className="contact__link">
-                      {p}
-                    </a>
-                  ))}
+                  <div className="contact__phones">
+                    {PHONES.map((p) => (
+                      <a key={p} href={phoneHref(p)} className="contact__link">
+                        {p}
+                      </a>
+                    ))}
+                  </div>
                 </li>
                 <li>
                   <span className="contact__label">Location</span>

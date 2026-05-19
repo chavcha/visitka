@@ -1046,6 +1046,18 @@
   }
 }
 
+.contact__phones {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.contact__phones .contact__link {
+  display: block;
+  line-height: 1.35;
+}
+
 .contact__label {
   display: block;
   margin-bottom: 8px;
