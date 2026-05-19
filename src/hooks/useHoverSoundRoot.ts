@@ -1,4 +1,5 @@
 import { useEffect, type RefObject } from 'react'
+import { unlockUiAudio } from '../audio/hoverSound'
 import { useSound } from '../audio/SoundContext'
 import { usePrefersReducedMotion } from './usePrefersReducedMotion'
 
@@ -28,6 +29,7 @@ export function useHoverSoundRoot(rootRef: RefObject<HTMLElement | null>) {
 
     const onClick = (event: MouseEvent) => {
       if (event.button !== 0) return
+      void unlockUiAudio()
       if (isSoundTarget(event.target, soundSelector)) playClick()
     }
 

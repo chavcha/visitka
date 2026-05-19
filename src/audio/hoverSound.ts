@@ -9,20 +9,39 @@ const TERMINAL_GAP_MS = 30
 
 export type TerminalSound = 'key' | 'backspace' | 'enter'
 
-function ensureContext(): AudioContext | null {
+function getContext(): AudioContext | null {
   if (typeof window === 'undefined') return null
   if (!ctx) ctx = new AudioContext()
-  if (ctx.state === 'suspended') {
-    void ctx.resume()
-    return null
-  }
   return ctx
 }
 
+function ensureContext(): AudioContext | null {
+  const audio = getContext()
+  if (!audio || audio.state !== 'running') return null
+  return audio
+}
+
+export function isAudioUnlocked(): boolean {
+  return getContext()?.state === 'running'
+}
+
+/** Must run inside a user gesture (click, keydown, etc.). */
+export async function unlockUiAudio(): Promise<boolean> {
+  const audio = getContext()
+  if (!audio) return false
+  if (audio.state === 'running') return true
+  if (audio.state === 'closed') return false
+  try {
+    await audio.resume()
+    return isAudioUnlocked()
+  } catch {
+    return false
+  }
+}
+
+/** @deprecated Use unlockUiAudio */
 export function unlockHoverAudio() {
-  if (typeof window === 'undefined') return
-  if (!ctx) ctx = new AudioContext()
-  if (ctx.state === 'suspended') void ctx.resume()
+  void unlockUiAudio()
 }
 
 function playTone(

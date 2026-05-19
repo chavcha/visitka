@@ -2,6 +2,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -10,7 +11,7 @@ import {
   playClickSound,
   playHoverSound,
   playTerminalSound,
-  unlockHoverAudio,
+  unlockUiAudio,
   type TerminalSound,
 } from './hoverSound'
 
@@ -58,8 +59,9 @@ export function SoundProvider({ children }: { children: ReactNode }) {
       /* ignore */
     }
     if (next) {
-      unlockHoverAudio()
-      playClickSound()
+      void unlockUiAudio().then((ok) => {
+        if (ok) playClickSound()
+      })
     }
   }, [])
 
@@ -72,12 +74,30 @@ export function SoundProvider({ children }: { children: ReactNode }) {
         /* ignore */
       }
       if (next) {
-        unlockHoverAudio()
-        playClickSound()
+        void unlockUiAudio().then((ok) => {
+          if (ok) playClickSound()
+        })
       }
       return next
     })
   }, [])
+
+  useEffect(() => {
+    if (!enabled) return
+
+    const unlockFromGesture = () => {
+      void unlockUiAudio()
+    }
+
+    const opts: AddEventListenerOptions = { capture: true, passive: true }
+    window.addEventListener('pointerdown', unlockFromGesture, opts)
+    window.addEventListener('keydown', unlockFromGesture, opts)
+
+    return () => {
+      window.removeEventListener('pointerdown', unlockFromGesture, opts)
+      window.removeEventListener('keydown', unlockFromGesture, opts)
+    }
+  }, [enabled])
 
   const playHover = useCallback(() => {
     if (!enabled) return

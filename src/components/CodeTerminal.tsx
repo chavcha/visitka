@@ -5,6 +5,7 @@ import {
   useState,
   type KeyboardEvent,
 } from 'react'
+import { unlockUiAudio } from '../audio/hoverSound'
 import { useSound } from '../audio/SoundContext'
 import { useLocale } from '../i18n/LocaleContext'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
@@ -134,6 +135,7 @@ export function CodeTerminal() {
 
   const onInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (!reducedMotion) {
+      void unlockUiAudio()
       if (e.key === 'Enter') playTerminal('enter')
       else if (e.key === 'Backspace') playTerminal('backspace')
       else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
