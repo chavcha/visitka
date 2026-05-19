@@ -18,6 +18,9 @@ const en: Copy = {
     accentBlue: 'Blue accent',
     accentViolet: 'Violet accent',
     accentEmerald: 'Emerald accent',
+    sound: 'UI sounds',
+    soundOn: 'Enable hover sounds',
+    soundOff: 'Disable hover sounds',
   },
   nav: {
     about: 'About',
@@ -148,6 +151,9 @@ const ru: Copy = {
     accentBlue: 'Синий акцент',
     accentViolet: 'Фиолетовый акцент',
     accentEmerald: 'Изумрудный акцент',
+    sound: 'Звуки интерфейса',
+    soundOn: 'Включить звук при наведении',
+    soundOff: 'Выключить звук при наведении',
   },
   nav: {
     about: 'Обо мне',

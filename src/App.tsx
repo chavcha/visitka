@@ -3,6 +3,7 @@ import {
   Suspense,
   useCallback,
   useEffect,
+  useRef,
   useState,
   type CSSProperties,
 } from 'react'
@@ -18,6 +19,7 @@ const CodeTerminal = lazy(() =>
 )
 import { HireMeToast } from './components/HireMeToast'
 import { LocaleToggle } from './components/LocaleToggle'
+import { SoundToggle } from './components/SoundToggle'
 import { ThemeToggle } from './components/ThemeToggle'
 import { MagneticLink } from './components/MagneticLink'
 import { listenForHireMeSecret, logConsoleEasterEgg } from './features/easterEgg'
@@ -26,6 +28,7 @@ import { ScrollProgress } from './components/ScrollProgress'
 import { TypingRotator } from './components/TypingRotator'
 import { SkillCard } from './components/SkillCard'
 import { useLocale } from './i18n/LocaleContext'
+import { useHoverSoundRoot } from './hooks/useHoverSoundRoot'
 import { usePointerParallax } from './hooks/usePointerParallax'
 import { usePrefersReducedMotion } from './hooks/usePrefersReducedMotion'
 import { useScrollSpy } from './hooks/useScrollSpy'
@@ -72,6 +75,7 @@ function phoneHref(display: string) {
 
 function App() {
   const { t, locale } = useLocale()
+  const pageRef = useRef<HTMLDivElement>(null)
   const [scrolled, setScrolled] = useState(false)
   const [ready, setReady] = useState(false)
   const [activeJob, setActiveJob] = useState('01')
@@ -83,6 +87,7 @@ function App() {
   const jobs = t.experience.jobs
 
   usePointerParallax(!reducedMotion)
+  useHoverSoundRoot(pageRef)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 48)
@@ -116,7 +121,7 @@ function App() {
   const telegramPrefetch = prefetchIntentHandlers('https://t.me/camefromwayabove')
 
   return (
-    <div className={`page${ready ? ' page--ready' : ''}`}>
+    <div ref={pageRef} className={`page${ready ? ' page--ready' : ''}`}>
       <ScrollProgress />
       <CursorSpotlight />
       <HireMeToast visible={hireToast} onClose={closeHireToast} />
@@ -144,6 +149,7 @@ function App() {
             })}
           </nav>
           <div className="header__tools">
+            <SoundToggle />
             <LocaleToggle />
             <ThemeToggle />
           </div>

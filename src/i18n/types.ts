@@ -23,6 +23,9 @@ export type Copy = {
     accentBlue: string
     accentViolet: string
     accentEmerald: string
+    sound: string
+    soundOn: string
+    soundOff: string
   }
   nav: {
     about: string
