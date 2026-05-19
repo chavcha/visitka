@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState, type CSSProperties } from 'react'
 import { CountUp } from './components/CountUp'
 import { CursorSpotlight } from './components/CursorSpotlight'
+import { CodeTerminal } from './components/CodeTerminal'
 import { HireMeToast } from './components/HireMeToast'
 import { LocaleToggle } from './components/LocaleToggle'
 import { ThemeToggle } from './components/ThemeToggle'
@@ -309,6 +310,7 @@ function App() {
                 {t.code.title}
               </h2>
               <p className="cta-band__text">{t.code.text}</p>
+              <CodeTerminal />
               <MagneticLink
                 className="btn btn--fill btn--lg btn-magnetic"
                 href="https://github.com/chavcha"

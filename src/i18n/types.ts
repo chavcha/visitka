@@ -72,6 +72,21 @@ export type Copy = {
     text: string
     github: string
   }
+  terminal: {
+    welcome: string
+    hint: string
+    helpTitle: string
+    helpLines: string[]
+    skillsTitle: string
+    contactTitle: string
+    contactEmail: string
+    contactTelegram: string
+    contactGithub: string
+    contactPhone: string
+    githubOpen: string
+    cleared: string
+    unknown: string
+  }
   contact: {
     eyebrow: string
     line1: string
