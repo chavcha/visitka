@@ -124,7 +124,7 @@ function App() {
                 </p>
                 <div className="hero__stats">
                   <div className="stat">
-                    <span className="stat__value">2+</span>
+                    <span className="stat__value">1+</span>
                     <span className="stat__label">года в разработке</span>
                   </div>
                   <div className="stat">
@@ -181,10 +181,11 @@ function App() {
             </Reveal>
             <Reveal delay={120} className="panel__body">
               <p>
-                Два года в разработке ПО с фокусом на фронтенд: HTML, CSS,
-                React, React Native, Redux и смежный стек. Увлекаюсь
-                качественными интерфейсами и продуктовой логикой, комфортно
-                работаю в кросс-функциональных командах.
+                Один год в разработке ПО с фокусом на фронтенд: HTML и CSS,
+                JavaScript, TypeScript, React и Vue, React Native, Redux,
+                Vite, Node.js, GraphQL и смежный стек (Effector, FSD, C# /
+                .NET). Увлекаюсь качественными интерфейсами и продуктовой
+                логикой, комфортно работаю в кросс-функциональных командах.
               </p>
               <p>
                 Пишу поддерживаемый, документируемый код, провожу code review.
@@ -322,6 +323,17 @@ function App() {
                   <span>Анапа, Россия</span>
                 </li>
                 <li>
+                  <span className="contact__label">Telegram</span>
+                  <a
+                    href="https://t.me/camefromwayabove"
+                    className="contact__link"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    @camefromwayabove
+                  </a>
+                </li>
+                <li>
                   <span className="contact__label">GitHub</span>
                   <a
                     href="https://github.com/chavcha"
@@ -342,7 +354,7 @@ function App() {
             <Reveal>
               <p className="panel__eyebrow">Вне работы</p>
               <p id="extra-title" className="panel__muted">
-                Единоборства · фильмы и сериалы · музыка · игры
+                Единоборства · Фильмы и сериалы · Музыка · Игры
               </p>
             </Reveal>
           </div>
