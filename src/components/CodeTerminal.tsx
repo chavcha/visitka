@@ -3,7 +3,6 @@ import {
   useEffect,
   useRef,
   useState,
-  type FormEvent,
   type KeyboardEvent,
 } from 'react'
 import { useLocale } from '../i18n/LocaleContext'
@@ -47,6 +46,7 @@ export function CodeTerminal() {
   const [input, setInput] = useState('')
   const bodyRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const lastCommandRef = useRef<{ text: string; at: number }>({ text: '', at: 0 })
 
   useEffect(() => {
     lineId = 0
@@ -62,11 +62,7 @@ export function CodeTerminal() {
   }, [lines])
 
   const runCommand = useCallback(
-    (raw: string): TerminalLine[] => {
-      const cmd = raw.trim().toLowerCase()
-
-      if (!cmd) return []
-
+    (cmd: string): TerminalLine[] => {
       if (cmd === 'help') {
         return [
           nextLine('out', t.terminal.helpTitle),
@@ -101,14 +97,23 @@ export function CodeTerminal() {
     [t.terminal],
   )
 
-  const submit = useCallback(
+  const execute = useCallback(
     (raw: string) => {
-      const trimmed = raw.trim()
-      if (!trimmed) return
+      const cmd = raw.trim().toLowerCase()
+      if (!cmd) return
 
-      if (trimmed.toLowerCase() === 'clear') {
+      const now = Date.now()
+      if (
+        lastCommandRef.current.text === cmd &&
+        now - lastCommandRef.current.at < 500
+      ) {
+        return
+      }
+      lastCommandRef.current = { text: cmd, at: now }
+
+      if (cmd === 'clear') {
         setLines([
-          nextLine('in', `> ${trimmed}`),
+          nextLine('in', `> ${cmd}`),
           nextLine('out', t.terminal.cleared),
           nextLine('system', t.terminal.hint),
         ])
@@ -116,40 +121,26 @@ export function CodeTerminal() {
         return
       }
 
-      const output = runCommand(trimmed)
-      setLines((prev) => [
-        ...prev,
-        nextLine('in', `> ${trimmed}`),
-        ...output,
-      ])
+      const output = runCommand(cmd)
+      setLines((prev) => [...prev, nextLine('in', `> ${cmd}`), ...output])
       setInput('')
     },
     [runCommand, t.terminal.cleared, t.terminal.hint],
   )
 
-  const onSubmit = (e: FormEvent) => {
+  const onInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key !== 'Enter') return
     e.preventDefault()
-    submit(input)
+    e.stopPropagation()
+    execute(e.currentTarget.value)
   }
 
   const onBodyKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    const target = e.target
-    if (
-      target instanceof HTMLInputElement ||
-      target instanceof HTMLTextAreaElement
-    ) {
-      return
-    }
-
+    if (e.target instanceof HTMLInputElement) return
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault()
       inputRef.current?.focus()
     }
-  }
-
-  const onInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    // Keep Enter on the input from bubbling to the body (body used to block submit).
-    e.stopPropagation()
   }
 
   return (
@@ -179,7 +170,7 @@ export function CodeTerminal() {
             {line.text}
           </p>
         ))}
-        <form className="code-terminal__form" onSubmit={onSubmit}>
+        <div className="code-terminal__form" role="group" aria-label="Command input">
           <label className="code-terminal__prompt" htmlFor="terminal-input">
             {'>'}
           </label>
@@ -195,8 +186,9 @@ export function CodeTerminal() {
             autoComplete="off"
             autoCapitalize="off"
             autoCorrect="off"
+            enterKeyHint="send"
           />
-        </form>
+        </div>
       </div>
     </div>
   )
