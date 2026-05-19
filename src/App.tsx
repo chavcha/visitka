@@ -6,9 +6,11 @@ import {
   useRef,
   useState,
   type CSSProperties,
+  type MouseEvent,
 } from 'react'
 import { CountUp } from './components/CountUp'
 import { CursorSpotlight } from './components/CursorSpotlight'
+import { fireConfetti } from './utils/confetti'
 import { prefetchIntentHandlers, prefetchUrl } from './utils/prefetch'
 
 const HeroScene = lazy(() =>
@@ -120,6 +122,14 @@ function App() {
   const githubPrefetch = prefetchIntentHandlers('https://github.com/chavcha')
   const telegramPrefetch = prefetchIntentHandlers('https://t.me/camefromwayabove')
 
+  const onDiscussClick = useCallback((e: MouseEvent<HTMLAnchorElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    fireConfetti(
+      (rect.left + rect.width / 2) / window.innerWidth,
+      (rect.top + rect.height / 2) / window.innerHeight,
+    )
+  }, [])
+
   return (
     <div ref={pageRef} className={`page${ready ? ' page--ready' : ''}`}>
       <ScrollProgress />
@@ -201,7 +211,11 @@ function App() {
                 </div>
               </div>
               <div className="hero__actions">
-                <MagneticLink className="btn btn--fill btn-magnetic" href="#contact">
+                <MagneticLink
+                  className="btn btn--fill btn-magnetic"
+                  href="#contact"
+                  onClick={onDiscussClick}
+                >
                   {t.hero.discuss}
                 </MagneticLink>
                 <MagneticLink
