@@ -133,10 +133,25 @@ export function CodeTerminal() {
   }
 
   const onBodyKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    const target = e.target
+    if (
+      target instanceof HTMLInputElement ||
+      target instanceof HTMLTextAreaElement
+    ) {
+      return
+    }
+
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault()
       inputRef.current?.focus()
     }
+  }
+
+  const onInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    e.stopPropagation()
+    if (e.key !== 'Enter') return
+    e.preventDefault()
+    submit(input)
   }
 
   return (
@@ -177,6 +192,7 @@ export function CodeTerminal() {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onKeyDown={onInputKeyDown}
             spellCheck={false}
             autoComplete="off"
             autoCapitalize="off"
