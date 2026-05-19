@@ -236,7 +236,7 @@ function App() {
             <Reveal>
               <p className="panel__eyebrow">02 — Опыт</p>
               <h2 id="experience-title" className="panel__heading panel__heading--sm">
-                Где я приносил пользу
+                Ключевые достижения
               </h2>
             </Reveal>
 
