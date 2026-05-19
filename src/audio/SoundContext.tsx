@@ -6,11 +6,11 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import { playHoverSound, unlockHoverAudio } from './hoverSound'
+import { playClickSound, playHoverSound, unlockHoverAudio } from './hoverSound'
 
 const STORAGE_KEY = 'visitka-sound'
 
-const HOVER_SELECTOR = [
+export const UI_SOUND_SELECTOR = [
   'a[href]',
   'button:not(:disabled)',
   '.btn',
@@ -26,7 +26,8 @@ type SoundContextValue = {
   setEnabled: (next: boolean) => void
   toggleEnabled: () => void
   playHover: () => void
-  hoverSelector: string
+  playClick: () => void
+  soundSelector: string
 }
 
 const SoundContext = createContext<SoundContextValue | null>(null)
@@ -51,7 +52,7 @@ export function SoundProvider({ children }: { children: ReactNode }) {
     }
     if (next) {
       unlockHoverAudio()
-      playHoverSound()
+      playClickSound()
     }
   }, [])
 
@@ -65,7 +66,7 @@ export function SoundProvider({ children }: { children: ReactNode }) {
       }
       if (next) {
         unlockHoverAudio()
-        playHoverSound()
+        playClickSound()
       }
       return next
     })
@@ -76,15 +77,21 @@ export function SoundProvider({ children }: { children: ReactNode }) {
     playHoverSound()
   }, [enabled])
 
+  const playClick = useCallback(() => {
+    if (!enabled) return
+    playClickSound()
+  }, [enabled])
+
   const value = useMemo(
     () => ({
       enabled,
       setEnabled,
       toggleEnabled,
       playHover,
-      hoverSelector: HOVER_SELECTOR,
+      playClick,
+      soundSelector: UI_SOUND_SELECTOR,
     }),
-    [enabled, setEnabled, toggleEnabled, playHover],
+    [enabled, setEnabled, toggleEnabled, playHover, playClick],
   )
 
   return (
