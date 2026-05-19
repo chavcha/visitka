@@ -103,6 +103,10 @@ const en: Copy = {
     text: 'Martial arts · Movies & TV · Music · Games',
   },
   footer: { name: 'Vladimir Sidorov' },
+  easterEgg: {
+    title: 'hire me',
+    text: 'You found the secret. Ready to build something together?',
+  },
 }
 
 const ru: Copy = {
@@ -208,6 +212,10 @@ const ru: Copy = {
     text: 'Единоборства · Фильмы и сериалы · Музыка · Игры',
   },
   footer: { name: 'Владимир Сидоров' },
+  easterEgg: {
+    title: 'hire me',
+    text: 'Вы нашли секрет. Готов обсудить проект?',
+  },
 }
 
 export const translations: Record<Locale, Copy> = { en, ru }

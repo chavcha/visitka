@@ -1258,6 +1258,66 @@
   color: var(--heading);
 }
 
+/* —— Easter egg toast —— */
+.hire-toast {
+  position: fixed;
+  z-index: 150;
+  right: 20px;
+  bottom: 24px;
+  max-width: min(360px, calc(100% - 40px));
+  padding: 20px 22px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+  animation: hire-toast-in 0.55s var(--ease-out) both;
+}
+
+.hire-toast__title {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hire-toast__text {
+  margin: 0 0 12px;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.hire-toast__link {
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.hire-toast__link:hover {
+  text-decoration: underline;
+}
+
+@keyframes hire-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hire-toast {
+    animation: none;
+  }
+}
+
 /* —— Mobile —— */
 @media (max-width: 560px) {
   .hero__stats {

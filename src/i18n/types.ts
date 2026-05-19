@@ -89,4 +89,8 @@ export type Copy = {
   footer: {
     name: string
   }
+  easterEgg: {
+    title: string
+    text: string
+  }
 }

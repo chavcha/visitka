@@ -1,9 +1,11 @@
-import { useEffect, useState, type CSSProperties } from 'react'
+import { useCallback, useEffect, useState, type CSSProperties } from 'react'
 import { CountUp } from './components/CountUp'
 import { CursorSpotlight } from './components/CursorSpotlight'
+import { HireMeToast } from './components/HireMeToast'
 import { LocaleToggle } from './components/LocaleToggle'
 import { ThemeToggle } from './components/ThemeToggle'
 import { MagneticLink } from './components/MagneticLink'
+import { listenForHireMeSecret, logConsoleEasterEgg } from './features/easterEgg'
 import { Reveal } from './components/Reveal'
 import { ScrollProgress } from './components/ScrollProgress'
 import { SkillCard } from './components/SkillCard'
@@ -53,10 +55,12 @@ function phoneHref(display: string) {
 }
 
 function App() {
-  const { t } = useLocale()
+  const { t, locale } = useLocale()
   const [scrolled, setScrolled] = useState(false)
   const [ready, setReady] = useState(false)
   const [activeJob, setActiveJob] = useState('01')
+  const [hireToast, setHireToast] = useState(false)
+  const closeHireToast = useCallback(() => setHireToast(false), [])
   const reducedMotion = usePrefersReducedMotion()
   const activeSection = useScrollSpy(SPY_SECTIONS)
 
@@ -76,10 +80,17 @@ function App() {
     return () => cancelAnimationFrame(id)
   }, [])
 
+  useEffect(() => {
+    logConsoleEasterEgg(locale)
+  }, [locale])
+
+  useEffect(() => listenForHireMeSecret(() => setHireToast(true)), [])
+
   return (
     <div className={`page${ready ? ' page--ready' : ''}`}>
       <ScrollProgress />
       <CursorSpotlight />
+      <HireMeToast visible={hireToast} onClose={closeHireToast} />
       <a href="#main" className="skip">
         {t.a11y.skip}
       </a>
