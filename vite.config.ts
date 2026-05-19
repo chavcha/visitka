@@ -15,4 +15,16 @@ function pagesBase(): string {
 export default defineConfig({
   base: pagesBase(),
   plugins: [react()],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules/three')) return 'three'
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+            return 'react'
+          }
+        },
+      },
+    },
+  },
 })

@@ -1160,6 +1160,14 @@
   color: var(--text);
 }
 
+.code-terminal-placeholder {
+  margin-bottom: 28px;
+  min-height: 280px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
 .code-terminal {
   margin-bottom: 28px;
   border: 1px solid var(--border-strong);

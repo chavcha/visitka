@@ -5,6 +5,7 @@ import {
   type ReactNode,
 } from 'react'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
+import { prefetchIntentHandlers } from '../utils/prefetch'
 
 type MagneticLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   children: ReactNode
@@ -35,12 +36,16 @@ export function MagneticLink({
     el.style.transform = ''
   }
 
+  const href = typeof props.href === 'string' ? props.href : undefined
+  const prefetch = prefetchIntentHandlers(href)
+
   return (
     <a
       ref={ref}
       className={`magnetic ${className}`.trim()}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
+      {...prefetch}
       {...props}
     >
       {children}

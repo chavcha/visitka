@@ -1,8 +1,21 @@
-import { useCallback, useEffect, useState, type CSSProperties } from 'react'
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useState,
+  type CSSProperties,
+} from 'react'
 import { CountUp } from './components/CountUp'
 import { CursorSpotlight } from './components/CursorSpotlight'
-import { CodeTerminal } from './components/CodeTerminal'
-import { HeroScene } from './components/HeroScene'
+import { prefetchIntentHandlers, prefetchUrl } from './utils/prefetch'
+
+const HeroScene = lazy(() =>
+  import('./components/HeroScene').then((m) => ({ default: m.HeroScene })),
+)
+const CodeTerminal = lazy(() =>
+  import('./components/CodeTerminal').then((m) => ({ default: m.CodeTerminal })),
+)
 import { HireMeToast } from './components/HireMeToast'
 import { LocaleToggle } from './components/LocaleToggle'
 import { ThemeToggle } from './components/ThemeToggle'
@@ -88,6 +101,19 @@ function App() {
 
   useEffect(() => listenForHireMeSecret(() => setHireToast(true)), [])
 
+  useEffect(() => {
+    const run = () => prefetchUrl('https://github.com/chavcha')
+    if (typeof window.requestIdleCallback === 'function') {
+      const id = window.requestIdleCallback(run)
+      return () => window.cancelIdleCallback(id)
+    }
+    const timer = window.setTimeout(run, 2500)
+    return () => window.clearTimeout(timer)
+  }, [])
+
+  const githubPrefetch = prefetchIntentHandlers('https://github.com/chavcha')
+  const telegramPrefetch = prefetchIntentHandlers('https://t.me/camefromwayabove')
+
   return (
     <div className={`page${ready ? ' page--ready' : ''}`}>
       <ScrollProgress />
@@ -133,7 +159,9 @@ function App() {
           aria-labelledby="hero-title"
         >
           <div className="hero__bg" aria-hidden="true">
-            <HeroScene ready={ready} />
+            <Suspense fallback={null}>
+              <HeroScene ready={ready} />
+            </Suspense>
             <div className="hero__orb hero__orb--1" />
             <div className="hero__orb hero__orb--2" />
             <div className="hero__grid" />
@@ -312,7 +340,9 @@ function App() {
                 {t.code.title}
               </h2>
               <p className="cta-band__text">{t.code.text}</p>
-              <CodeTerminal />
+              <Suspense fallback={<div className="code-terminal-placeholder" aria-hidden />}>
+                <CodeTerminal />
+              </Suspense>
               <MagneticLink
                 className="btn btn--fill btn--lg btn-magnetic"
                 href="https://github.com/chavcha"
@@ -367,6 +397,7 @@ function App() {
                     className="contact__link"
                     target="_blank"
                     rel="noreferrer"
+                    {...telegramPrefetch}
                   >
                     @camefromwayabove
                   </a>
@@ -378,6 +409,7 @@ function App() {
                     className="contact__link"
                     target="_blank"
                     rel="noreferrer"
+                    {...githubPrefetch}
                   >
                     chavcha
                   </a>
