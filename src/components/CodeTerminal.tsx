@@ -148,10 +148,8 @@ export function CodeTerminal() {
   }
 
   const onInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    // Keep Enter on the input from bubbling to the body (body used to block submit).
     e.stopPropagation()
-    if (e.key !== 'Enter') return
-    e.preventDefault()
-    submit(input)
   }
 
   return (
