@@ -1,10 +1,12 @@
 import { useEffect, useState, type CSSProperties } from 'react'
 import { CountUp } from './components/CountUp'
 import { CursorSpotlight } from './components/CursorSpotlight'
+import { LocaleToggle } from './components/LocaleToggle'
 import { MagneticLink } from './components/MagneticLink'
 import { Reveal } from './components/Reveal'
 import { ScrollProgress } from './components/ScrollProgress'
 import { SkillCard } from './components/SkillCard'
+import { useLocale } from './i18n/LocaleContext'
 import { usePointerParallax } from './hooks/usePointerParallax'
 import { usePrefersReducedMotion } from './hooks/usePrefersReducedMotion'
 import { useScrollSpy } from './hooks/useScrollSpy'
@@ -33,40 +35,16 @@ const SKILLS = [
 
 const PHONES = ['+7 (918) 488-34-24', '+7 (991) 537-82-82'] as const
 
-const EXPERIENCE = [
-  {
-    index: '01',
-    title: 'SEO Specialist',
-    highlights: [
-      'Promotion, analytics, and optimization.',
-      'Yandex Webmaster, Google Search Console, Yandex Metrica.',
-      'Spa and furniture manufacturing: analysis and growth.',
-      'Mitigating impact of attacks using lookalike domains.',
-    ],
-  },
-  {
-    index: '02',
-    title: 'Frontend Developer',
-    highlights: [
-      'Figma-to-code: semantic HTML, responsive layouts, CSS Grid and Flexbox — interfaces that work on desktop and mobile.',
-      'Live templates and UI kits for clients: typography, button and form states, attention to details users notice.',
-      'Graduation project “Social Network” in C# and Razor Pages: registration, profiles, feed, and interactions — fullstack logic with server rendering and clean MVC structure.',
-      'Vue.js SPA: components, Vue Router, REST API integration, and state management — from prototype to production UI without unnecessary complexity.',
-      'Independent delivery: scope alignment, clear timelines, progress demos, and iterations so outcomes match business expectations.',
-    ],
-  },
-] as const
-
-const NAV = [
-  { href: '#about', label: 'About' },
-  { href: '#experience', label: 'Experience' },
-  { href: '#skills', label: 'Skills' },
-  { href: '#contact', label: 'Contact' },
-] as const
-
 const TICKER_TEXT =
   'React · Vue · TypeScript · React Native · Redux · Node.js · GraphQL · Vite · FSD · C# · SEO · ' +
   'React 19 · React DOM · TypeScript · Vite 8 · HTML5 · CSS3 · ESLint ·'
+
+const NAV_HREFS = [
+  { href: '#about', key: 'about' as const },
+  { href: '#experience', key: 'experience' as const },
+  { href: '#skills', key: 'skills' as const },
+  { href: '#contact', key: 'contact' as const },
+]
 
 function phoneHref(display: string) {
   const digits = display.replace(/\D/g, '')
@@ -74,11 +52,14 @@ function phoneHref(display: string) {
 }
 
 function App() {
+  const { t } = useLocale()
   const [scrolled, setScrolled] = useState(false)
   const [ready, setReady] = useState(false)
-  const [activeJob, setActiveJob] = useState<string>(EXPERIENCE[0].index)
+  const [activeJob, setActiveJob] = useState('01')
   const reducedMotion = usePrefersReducedMotion()
   const activeSection = useScrollSpy(SPY_SECTIONS)
+
+  const jobs = t.experience.jobs
 
   usePointerParallax(!reducedMotion)
 
@@ -99,7 +80,7 @@ function App() {
       <ScrollProgress />
       <CursorSpotlight />
       <a href="#main" className="skip">
-        Skip to main content
+        {t.a11y.skip}
       </a>
 
       <header className={`header ${scrolled ? 'header--scrolled' : ''}`}>
@@ -107,8 +88,8 @@ function App() {
           <a className="header__logo" href="#top">
             VS
           </a>
-          <nav className="header__nav" aria-label="Sections">
-            {NAV.map((item) => {
+          <nav className="header__nav" aria-label={t.a11y.nav}>
+            {NAV_HREFS.map((item) => {
               const id = item.href.slice(1)
               return (
                 <a
@@ -116,13 +97,14 @@ function App() {
                   href={item.href}
                   className={activeSection === id ? 'is-active' : undefined}
                 >
-                  {item.label}
+                  {t.nav[item.key]}
                 </a>
               )
             })}
           </nav>
+          <LocaleToggle />
           <MagneticLink className="header__cta btn-magnetic" href="#contact">
-            Get in touch
+            {t.header.cta}
           </MagneticLink>
         </div>
       </header>
@@ -142,32 +124,31 @@ function App() {
 
           <div className="hero__content container">
             <div className="hero__copy">
-              <p className="hero__label">Software Developer</p>
+              <p className="hero__label">{t.hero.label}</p>
               <h1 id="hero-title" className="hero__title">
-                <span className="hero__line">Vladimir</span>
-                <span className="hero__line hero__line--accent">Sidorov</span>
+                <span className="hero__line">{t.hero.firstName}</span>
+                <span className="hero__line hero__line--accent">
+                  {t.hero.lastName}
+                </span>
               </h1>
-              <p className="hero__tagline">
-                I build frontend interfaces and products — from layout and Vue
-                to React and React Native. Clean code, measurable outcomes.
-              </p>
+              <p className="hero__tagline">{t.hero.tagline}</p>
               <div className="hero__stats">
                 <div className="stat">
                   <CountUp value={1} suffix="+" />
-                  <span className="stat__label">year in development</span>
+                  <span className="stat__label">{t.hero.statYears}</span>
                 </div>
                 <div className="stat">
                   <CountUp value={20} suffix="+" />
-                  <span className="stat__label">technologies in stack</span>
+                  <span className="stat__label">{t.hero.statTech}</span>
                 </div>
                 <div className="stat">
-                  <span className="stat__value">KubSTU</span>
-                  <span className="stat__label">BSc Software Eng., 2025</span>
+                  <span className="stat__value">{t.hero.statUni}</span>
+                  <span className="stat__label">{t.hero.statDegree}</span>
                 </div>
               </div>
               <div className="hero__actions">
                 <MagneticLink className="btn btn--fill btn-magnetic" href="#contact">
-                  Discuss a project
+                  {t.hero.discuss}
                 </MagneticLink>
                 <MagneticLink
                   className="btn btn--outline btn-magnetic"
@@ -175,13 +156,13 @@ function App() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  GitHub
+                  {t.hero.github}
                 </MagneticLink>
               </div>
             </div>
           </div>
 
-          <a href="#about" className="hero__scroll" aria-label="Scroll down">
+          <a href="#about" className="hero__scroll" aria-label={t.a11y.scrollDown}>
             <span className="hero__scroll-line" />
           </a>
         </section>
@@ -199,28 +180,18 @@ function App() {
         <section id="about" className="panel panel--motion" aria-labelledby="about-title">
           <div className="container panel__grid">
             <Reveal variant="blur">
-              <p className="panel__eyebrow">01 — About</p>
+              <p className="panel__eyebrow">{t.about.eyebrow}</p>
               <h2 id="about-title" className="panel__heading">
-                A developer
+                {t.about.line1}
                 <br />
-                focused on
+                {t.about.line2}
                 <br />
-                <span className="text-gradient">outcomes</span>
+                <span className="text-gradient">{t.about.accent}</span>
               </h2>
             </Reveal>
             <Reveal delay={120} className="panel__body" variant="blur">
-              <p>
-                One year in software development with a frontend focus: HTML and
-                CSS, JavaScript, TypeScript, React and Vue, React Native, Redux,
-                Vite, Node.js, GraphQL, and related tools (Effector, FSD, C# /
-                .NET). I care about polished interfaces and product logic, and I
-                work well in cross-functional teams.
-              </p>
-              <p>
-                I write maintainable, documented code and do code reviews. I
-                also have experience in SEO and web analytics. I am looking for a
-                team where frontend is a full engineering discipline.
-              </p>
+              <p>{t.about.p1}</p>
+              <p>{t.about.p2}</p>
             </Reveal>
           </div>
         </section>
@@ -232,14 +203,14 @@ function App() {
         >
           <div className="container">
             <Reveal variant="blur">
-              <p className="panel__eyebrow">02 — Experience</p>
+              <p className="panel__eyebrow">{t.experience.eyebrow}</p>
               <h2 id="experience-title" className="panel__heading panel__heading--sm">
-                Key achievements
+                {t.experience.title}
               </h2>
             </Reveal>
 
             <ol className="timeline">
-              {EXPERIENCE.map((job, i) => (
+              {jobs.map((job, i) => (
                 <li key={job.index}>
                   <Reveal delay={i * 80}>
                     <article
@@ -266,11 +237,9 @@ function App() {
                         <ul className="timeline__list">
                           {job.highlights.map((item, j) => (
                             <li
-                              key={item}
+                              key={`${job.index}-${j}`}
                               style={
-                                {
-                                  '--item-delay': `${j * 60}ms`,
-                                } as CSSProperties
+                                { '--item-delay': `${j * 60}ms` } as CSSProperties
                               }
                             >
                               {item}
@@ -286,12 +255,10 @@ function App() {
 
             <Reveal delay={100} variant="blur">
               <article className="edu-card">
-                <p className="panel__eyebrow">Education</p>
-                <h3 className="edu-card__title">
-                  Kuban State Technological University
-                </h3>
-                <p className="edu-card__meta">2021 — 2025 · Bachelor&apos;s</p>
-                <p className="edu-card__text">Software Engineering · 09.03.04</p>
+                <p className="panel__eyebrow">{t.experience.education}</p>
+                <h3 className="edu-card__title">{t.experience.university}</h3>
+                <p className="edu-card__meta">{t.experience.meta}</p>
+                <p className="edu-card__text">{t.experience.degree}</p>
               </article>
             </Reveal>
           </div>
@@ -300,9 +267,9 @@ function App() {
         <section id="skills" className="panel panel--motion" aria-labelledby="skills-title">
           <div className="container">
             <Reveal variant="blur">
-              <p className="panel__eyebrow">03 — Stack</p>
+              <p className="panel__eyebrow">{t.skills.eyebrow}</p>
               <h2 id="skills-title" className="panel__heading panel__heading--sm">
-                Tools &amp; technologies
+                {t.skills.title}
               </h2>
             </Reveal>
             <ul className="bento" role="list">
@@ -322,21 +289,18 @@ function App() {
         <section className="cta-band panel--motion" aria-labelledby="code-title">
           <div className="container cta-band__inner">
             <Reveal variant="blur">
-              <p className="panel__eyebrow">Code</p>
+              <p className="panel__eyebrow">{t.code.eyebrow}</p>
               <h2 id="code-title" className="cta-band__title">
-                Browse repositories
+                {t.code.title}
               </h2>
-              <p className="cta-band__text">
-                GitHub complements the resume: project structure, code style, and
-                how I approach problems.
-              </p>
+              <p className="cta-band__text">{t.code.text}</p>
               <MagneticLink
                 className="btn btn--fill btn--lg btn-magnetic"
                 href="https://github.com/chavcha"
                 target="_blank"
                 rel="noreferrer"
               >
-                GitHub
+                {t.code.github}
               </MagneticLink>
             </Reveal>
           </div>
@@ -349,11 +313,11 @@ function App() {
         >
           <div className="container contact">
             <Reveal variant="blur">
-              <p className="panel__eyebrow">04 — Contact</p>
+              <p className="panel__eyebrow">{t.contact.eyebrow}</p>
               <h2 id="contact-title" className="contact__title">
-                Let&apos;s
+                {t.contact.line1}
                 <br />
-                <span className="text-gradient">collaborate</span>
+                <span className="text-gradient">{t.contact.accent}</span>
               </h2>
             </Reveal>
             <Reveal delay={80}>
@@ -364,7 +328,7 @@ function App() {
             <Reveal delay={120}>
               <ul className="contact__grid">
                 <li>
-                  <span className="contact__label">Phone</span>
+                  <span className="contact__label">{t.contact.phone}</span>
                   <div className="contact__phones">
                     {PHONES.map((p) => (
                       <a key={p} href={phoneHref(p)} className="contact__link">
@@ -374,11 +338,11 @@ function App() {
                   </div>
                 </li>
                 <li>
-                  <span className="contact__label">Location</span>
-                  <span>Anapa, Russia</span>
+                  <span className="contact__label">{t.contact.location}</span>
+                  <span>{t.contact.locationValue}</span>
                 </li>
                 <li>
-                  <span className="contact__label">Telegram</span>
+                  <span className="contact__label">{t.contact.telegram}</span>
                   <a
                     href="https://t.me/camefromwayabove"
                     className="contact__link"
@@ -389,7 +353,7 @@ function App() {
                   </a>
                 </li>
                 <li>
-                  <span className="contact__label">GitHub</span>
+                  <span className="contact__label">{t.contact.github}</span>
                   <a
                     href="https://github.com/chavcha"
                     className="contact__link"
@@ -407,9 +371,9 @@ function App() {
         <section className="panel panel--soft panel--motion" aria-labelledby="extra-title">
           <div className="container">
             <Reveal>
-              <p className="panel__eyebrow">Beyond work</p>
+              <p className="panel__eyebrow">{t.extra.eyebrow}</p>
               <p id="extra-title" className="panel__muted">
-                Martial arts · Movies &amp; TV · Music · Games
+                {t.extra.text}
               </p>
             </Reveal>
           </div>
@@ -418,7 +382,9 @@ function App() {
 
       <footer className="footer">
         <div className="container footer__inner">
-          <span>© {new Date().getFullYear()} Vladimir Sidorov</span>
+          <span>
+            © {new Date().getFullYear()} {t.footer.name}
+          </span>
           <a href="mailto:waldemar.vs@yandex.ru">waldemar.vs@yandex.ru</a>
         </div>
       </footer>
