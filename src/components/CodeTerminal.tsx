@@ -5,7 +5,6 @@ import {
   useState,
   type KeyboardEvent,
 } from 'react'
-import { PORTFOLIO_STACK_LINE } from '../data/portfolioStack'
 import { unlockUiAudio } from '../audio/hoverSound'
 import { useSound } from '../audio/SoundContext'
 import { useLocale } from '../i18n/LocaleContext'
@@ -81,8 +80,6 @@ export function CodeTerminal() {
         return [
           nextLine('out', t.terminal.skillsTitle),
           nextLine('out', `  ${SKILL_NAMES.join(' · ')}`),
-          nextLine('out', t.terminal.portfolioStackTitle),
-          nextLine('out', `  ${PORTFOLIO_STACK_LINE}`),
         ]
       }
 

@@ -989,19 +989,6 @@
   color: var(--text);
 }
 
-.skills__portfolio-label {
-  margin: clamp(40px, 6vw, 56px) 0 20px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.bento--portfolio {
-  margin-top: 0;
-}
-
 /* —— Bento skills —— */
 .bento {
   list-style: none;

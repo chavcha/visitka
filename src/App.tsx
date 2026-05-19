@@ -10,7 +10,6 @@ import {
 } from 'react'
 import { CountUp } from './components/CountUp'
 import { CursorSpotlight } from './components/CursorSpotlight'
-import { PORTFOLIO_STACK } from './data/portfolioStack'
 import { fireConfetti } from './utils/confetti'
 import { prefetchIntentHandlers, prefetchUrl } from './utils/prefetch'
 
@@ -63,7 +62,7 @@ const PHONES = ['+7 (918) 488-34-24', '+7 (991) 537-82-82'] as const
 
 const TICKER_TEXT =
   'React · Vue · TypeScript · React Native · Redux · Node.js · GraphQL · Vite · Three.js · FSD · C# · SEO · ' +
-  'React 19 · Vite 8 · GitHub Pages · GitHub Actions · HTML5 · CSS3 · ESLint ·'
+  'React 19 · Vite 8 · HTML5 · CSS3 · ESLint ·'
 
 const NAV_HREFS = [
   { href: '#about', key: 'about' as const },
@@ -344,21 +343,6 @@ function App() {
             </Reveal>
             <ul className="bento" role="list">
               {SKILLS.map((skill, i) => (
-                <li key={skill.name}>
-                  <SkillCard
-                    name={skill.name}
-                    size={skill.size}
-                    delay={(i % 6) * 40}
-                  />
-                </li>
-              ))}
-            </ul>
-
-            <Reveal delay={80} variant="blur">
-              <p className="skills__portfolio-label">{t.skills.portfolioLabel}</p>
-            </Reveal>
-            <ul className="bento bento--portfolio" role="list">
-              {PORTFOLIO_STACK.map((skill, i) => (
                 <li key={skill.name}>
                   <SkillCard
                     name={skill.name}
