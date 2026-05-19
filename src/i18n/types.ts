@@ -16,6 +16,13 @@ export type Copy = {
     nav: string
     scrollDown: string
     language: string
+    theme: string
+    darkMode: string
+    lightMode: string
+    accent: string
+    accentBlue: string
+    accentViolet: string
+    accentEmerald: string
   }
   nav: {
     about: string

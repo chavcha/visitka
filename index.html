@@ -1,6 +1,21 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script>
+      ;(function () {
+        try {
+          var m = localStorage.getItem('visitka-theme')
+          var a = localStorage.getItem('visitka-accent')
+          var light =
+            m === 'light' ||
+            (m !== 'dark' &&
+              window.matchMedia('(prefers-color-scheme: light)').matches)
+          document.documentElement.dataset.theme = light ? 'light' : 'dark'
+          document.documentElement.dataset.accent =
+            a === 'violet' || a === 'emerald' ? a : 'blue'
+        } catch (e) {}
+      })()
+    </script>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

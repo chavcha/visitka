@@ -1,16 +1,6 @@
+@import './theme/themes.css';
+
 :root {
-  --bg: #030304;
-  --bg-elevated: #0a0a0c;
-  --bg-card: rgba(255, 255, 255, 0.03);
-  --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.14);
-  --text: rgba(255, 255, 255, 0.72);
-  --text-muted: rgba(255, 255, 255, 0.45);
-  --heading: #ffffff;
-  --accent: #3b82f6;
-  --accent-2: #8b5cf6;
-  --accent-glow: rgba(59, 130, 246, 0.45);
-  --gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
   --font-display: 'Syne', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --font-mono: ui-monospace, 'Cascadia Code', monospace;
@@ -28,6 +18,9 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition:
+    background-color 0.35s var(--ease-out),
+    color 0.35s var(--ease-out);
 }
 
 *,
@@ -59,8 +52,8 @@ body {
 }
 
 ::selection {
-  background: rgba(59, 130, 246, 0.35);
-  color: #fff;
+  background: var(--selection-bg);
+  color: var(--selection-fg);
 }
 
 a {

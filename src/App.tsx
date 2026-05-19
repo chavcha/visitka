@@ -2,6 +2,7 @@ import { useEffect, useState, type CSSProperties } from 'react'
 import { CountUp } from './components/CountUp'
 import { CursorSpotlight } from './components/CursorSpotlight'
 import { LocaleToggle } from './components/LocaleToggle'
+import { ThemeToggle } from './components/ThemeToggle'
 import { MagneticLink } from './components/MagneticLink'
 import { Reveal } from './components/Reveal'
 import { ScrollProgress } from './components/ScrollProgress'
@@ -102,7 +103,10 @@ function App() {
               )
             })}
           </nav>
-          <LocaleToggle />
+          <div className="header__tools">
+            <LocaleToggle />
+            <ThemeToggle />
+          </div>
           <MagneticLink className="header__cta btn-magnetic" href="#contact">
             {t.header.cta}
           </MagneticLink>

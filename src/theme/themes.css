@@ -1,0 +1,82 @@
+/* Dark (default) */
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #030304;
+  --bg-elevated: #0a0a0c;
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --text: rgba(255, 255, 255, 0.72);
+  --text-muted: rgba(255, 255, 255, 0.45);
+  --heading: #ffffff;
+  --header-scrolled-bg: rgba(3, 3, 4, 0.72);
+  --grid-line: rgba(255, 255, 255, 0.03);
+  --cursor-spot: rgba(59, 130, 246, 0.07);
+  --btn-fill-bg: #ffffff;
+  --btn-fill-fg: #030304;
+  --btn-fill-shadow: rgba(255, 255, 255, 0.12);
+  --timeline-index: rgba(255, 255, 255, 0.08);
+  --selection-bg: rgba(59, 130, 246, 0.35);
+  --selection-fg: #fff;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f3f4f6;
+  --bg-elevated: #ffffff;
+  --bg-card: rgba(0, 0, 0, 0.03);
+  --border: rgba(0, 0, 0, 0.09);
+  --border-strong: rgba(0, 0, 0, 0.16);
+  --text: rgba(10, 10, 12, 0.78);
+  --text-muted: rgba(10, 10, 12, 0.5);
+  --heading: #0a0a0c;
+  --header-scrolled-bg: rgba(255, 255, 255, 0.88);
+  --grid-line: rgba(0, 0, 0, 0.06);
+  --cursor-spot: rgba(59, 130, 246, 0.09);
+  --btn-fill-bg: #0a0a0c;
+  --btn-fill-fg: #ffffff;
+  --btn-fill-shadow: rgba(0, 0, 0, 0.12);
+  --timeline-index: rgba(0, 0, 0, 0.06);
+  --selection-bg: rgba(59, 130, 246, 0.22);
+  --selection-fg: #0a0a0c;
+}
+
+/* Accent palettes */
+:root,
+[data-accent='blue'] {
+  --accent: #3b82f6;
+  --accent-2: #8b5cf6;
+  --accent-glow: rgba(59, 130, 246, 0.45);
+  --gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+}
+
+[data-accent='violet'] {
+  --accent: #8b5cf6;
+  --accent-2: #ec4899;
+  --accent-glow: rgba(139, 92, 246, 0.45);
+  --gradient: linear-gradient(135deg, #7c3aed 0%, #c026d3 50%, #f43f5e 100%);
+}
+
+[data-accent='emerald'] {
+  --accent: #10b981;
+  --accent-2: #06b6d4;
+  --accent-glow: rgba(16, 185, 129, 0.4);
+  --gradient: linear-gradient(135deg, #059669 0%, #06b6d4 50%, #3b82f6 100%);
+}
+
+[data-theme='light'][data-accent='blue'] {
+  --accent-glow: rgba(59, 130, 246, 0.28);
+  --cursor-spot: rgba(59, 130, 246, 0.1);
+}
+
+[data-theme='light'][data-accent='violet'] {
+  --accent-glow: rgba(139, 92, 246, 0.28);
+  --cursor-spot: rgba(139, 92, 246, 0.1);
+}
+
+[data-theme='light'][data-accent='emerald'] {
+  --accent-glow: rgba(16, 185, 129, 0.28);
+  --cursor-spot: rgba(16, 185, 129, 0.1);
+}
+
