@@ -2,6 +2,9 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 function pagesBase(): string {
+  // Vercel and local dev serve from domain root, not /visitka/
+  if (process.env.VERCEL) return '/'
+
   const repo = process.env.GITHUB_REPOSITORY
   if (!repo) return '/'
 
