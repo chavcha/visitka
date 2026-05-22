@@ -1,29 +1,38 @@
 import { useEffect, useState } from 'react'
 
+const SCROLL_OFFSET = 120
+
+function sectionTop(el: HTMLElement) {
+  return el.getBoundingClientRect().top + window.scrollY
+}
+
 export function useScrollSpy(sectionIds: readonly string[]) {
   const [active, setActive] = useState(sectionIds[0] ?? '')
 
   useEffect(() => {
-    const sections = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => el !== null)
+    const pickActive = () => {
+      const position = window.scrollY + SCROLL_OFFSET
+      let current = sectionIds[0] ?? ''
 
-    if (sections.length === 0) return
+      for (const id of sectionIds) {
+        const el = document.getElementById(id)
+        if (!el) continue
+        if (sectionTop(el) <= position) current = id
+      }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
+      setActive(current)
+    }
 
-        const id = visible[0]?.target.id
-        if (id) setActive(id)
-      },
-      { rootMargin: '-42% 0px -48% 0px', threshold: [0.08, 0.35, 0.6] },
-    )
+    pickActive()
+    window.addEventListener('scroll', pickActive, { passive: true })
+    window.addEventListener('resize', pickActive)
+    window.addEventListener('hashchange', pickActive)
 
-    for (const section of sections) observer.observe(section)
-    return () => observer.disconnect()
+    return () => {
+      window.removeEventListener('scroll', pickActive)
+      window.removeEventListener('resize', pickActive)
+      window.removeEventListener('hashchange', pickActive)
+    }
   }, [sectionIds])
 
   return active
