@@ -34,28 +34,6 @@
 
 ---
 
-## Быстрый старт
-
-```bash
-git clone https://github.com/chavcha/visitka.git
-cd visitka
-npm ci
-npm run dev
-```
-
-Откройте [http://localhost:5173](http://localhost:5173).
-
-### Скрипты
-
-| Команда | Описание |
-|---------|----------|
-| `npm run dev` | dev-сервер |
-| `npm run build` | production-сборка в `dist/` |
-| `npm run preview` | просмотр сборки |
-| `npm run lint` | ESLint |
-
----
-
 ## Структура проекта
 
 ```
@@ -68,16 +46,6 @@ src/
   hooks/        # scroll-spy, parallax, звуки
   utils/        # confetti, prefetch
 ```
-
----
-
-## Деплой
-
-При push в ветку `main` срабатывает [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).
-
-`base` для GitHub Pages задаётся в [`vite.config.ts`](vite.config.ts) из `GITHUB_REPOSITORY` (для репозитория `visitka` это `/visitka/`).
-
-Ручной запуск: **Actions → Deploy to GitHub Pages → Run workflow**.
 
 ---
 
