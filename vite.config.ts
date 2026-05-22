@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 function pagesBase(): string {
   // Vercel and local dev serve from domain root, not /visitka/
-  if (process.env.VERCEL) return '/'
+  if (process.env.VERCEL === '1' || process.env.VERCEL === 'true') return '/'
 
   const repo = process.env.GITHUB_REPOSITORY
   if (!repo) return '/'

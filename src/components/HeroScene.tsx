@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
 import { useTheme } from '../theme/ThemeContext'
+import { importWithTimeout } from '../utils/importWithTimeout'
 import type { Accent } from '../theme/types'
 
 const ACCENT_HEX: Record<Accent, number> = {
@@ -32,7 +33,12 @@ export function HeroScene({ ready }: HeroSceneProps) {
     let frame = 0
 
     const boot = async () => {
-      const THREE = await import('three')
+      let THREE: typeof import('three')
+      try {
+        THREE = await importWithTimeout(() => import('three'), 12_000)
+      } catch {
+        return
+      }
 
       if (disposed || !canvasRef.current) return
 
